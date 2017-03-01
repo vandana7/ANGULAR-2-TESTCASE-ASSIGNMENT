@@ -1,0 +1,21 @@
+
+<div class="container">
+  <h1>List of Task</h1>
+  <ul>
+
+
+    <li *ngFor="let task of newTask;let index = index">
+      {{task.title}}
+      {{task.description}}
+      {{task.date}}
+      {{task.priority}}
+
+
+
+      <input type="button" value="Edit" (click)="editTask(index)" style="margin-left: 4em">
+      <input type="button" value="Done" (click)="deleteByIndex(index)" style="margin-left: 1em"></li>
+  </ul>
+
+
+</div>
+
