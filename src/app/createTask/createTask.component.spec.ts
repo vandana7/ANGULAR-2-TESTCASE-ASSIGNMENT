@@ -84,6 +84,28 @@ describe('CreateTaskComponent', function () {
       priority: 'testData'
     }])
   });
+
+  it('should add a task to list of task', () => {
+    comp.index= null;
+    spyOn(window,'alert')
+    spyOn(service, 'adddata').and.returnValue(
+      Observable.of<any>(
+        [{
+          _id:'testData',
+          date: 'testData',
+          title: 'testData',
+          description: 'testData',
+          priority: 'testData'
+        }]
+      )
+    );
+    comp.addTask();
+    expect(window.alert).toHaveBeenCalledWith('Task Added')
+    router.navigate([]).then(data => {
+      expect(data).toBe(true);
+    })
+
+  });
   it(' should be able to update data after getting router parameter', () => {
     comp.index = '0';
 
@@ -105,24 +127,25 @@ describe('CreateTaskComponent', function () {
 
   });
 
-  // it('it should generate error while adding task if required', () => {
-  //   spyOn(console, 'error');
-  //   spyOn(service, 'adddata').and.returnValue(
-  //     Observable.throw(Error('Observable Error Occurs'))
-  //   );
-  //   comp.addTask();
-  //   expect(console.error('Observable Error Occurs')).toHaveBeenCalled();
-  // });
+  it('it should generate error while adding task if required', () => {
+    spyOn(console, 'error');
+    spyOn(service, 'adddata').and.returnValue(
+      Observable.throw(new Error('Observable Error Occurs'))
+    );
+    comp.addTask();
+    expect(console.error).toHaveBeenCalledWith(new Error('Observable Error Occurs'));
+  });
 
 
 
 
-  // it(' should generate error while updating task if required', () => {
-  //   spyOn(window, 'alert');
-  //   spyOn(service, 'updateData').and.returnValue(
-  //     Observable.throw(Error('Observable Error Occurs'))
-  //   );
-  //   comp.addTask();
-  //   expect(window.alert).toHaveBeenCalled();
-  // });
+  it(' should generate error while updating task if required', () => {
+    comp.index ="1";
+    spyOn(console, 'error');
+    spyOn(service, 'updateData').and.returnValue(
+      Observable.throw( new Error('observable Error Occurs'))
+    );
+    comp.addTask();
+    expect(console.error).toHaveBeenCalledWith(new Error('observable Error Occurs'));
+  });
 });

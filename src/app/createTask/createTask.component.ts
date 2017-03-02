@@ -38,14 +38,19 @@ export class CreateTaskComponent implements OnInit {
   }
 
   addTask() {
+    console.log('----------------------')
     if (this.index) {
       //this.service.update(this.index, this.task);
-      this.service.updateData(this.task).subscribe((data:any)=>alert(JSON.stringify(data)))
+      this.service.updateData(this.task).subscribe((data:any)=>{
+        alert(JSON.stringify(data))
+      },err => console.error(err));
       this.router.navigate(['ShowTask']);
     } else {
-      //this.service.add(this.task);
-      this.service.adddata(this.task).subscribe((data:any)=>alert(JSON.stringify(data)))
-      this.router.navigate(['ShowTask']);
+      this.service.adddata(this.task).subscribe((data:any)=>{
+        alert('Task Added')
+        this.router.navigate(['ShowTask']);
+      }, err => console.error(err));
+
     }
 
   }
